@@ -1,94 +1,63 @@
 import React, { useState } from 'react';
-import { BookOpen, Layers, Music, Cpu, Mic, Activity, ArrowRight, ChevronDown, ChevronUp, Terminal, Headphones, ExternalLink, Play, Disc } from 'lucide-react';
+import { BookOpen, Layers, Music, Cpu, Activity, ArrowRight, ChevronDown, ChevronUp, Terminal, Play, Disc, X, Youtube, Info, Volume2 } from 'lucide-react';
 
 const CourseIntroApp = () => {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeTab, setActiveTab] = useState('repertoire'); // Default to repertoire for immediate access check
   const [expandedModule, setExpandedModule] = useState(null);
 
   const toggleModule = (index) => {
-    setExpandedModule(expandedModule === index? null : index);
+    setExpandedModule(expandedModule === index ? null : index);
   };
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'overview':
-        return <OverviewSection />;
-      case 'modules':
-        return <ModulesSection expandedModule={expandedModule} toggleModule={toggleModule} />;
-      case 'concepts':
-        return <ConceptsSection />;
-      case 'repertoire':
-        return <RepertoireSection />;
-      case 'tools':
-        return <ToolsSection />;
-      default:
-        return <OverviewSection />;
+      case 'overview': return <OverviewSection />;
+      case 'modules': return <ModulesSection expandedModule={expandedModule} toggleModule={toggleModule} />;
+      case 'concepts': return <ConceptsSection />;
+      case 'repertoire': return <RepertoireSection />;
+      case 'tools': return <ToolsSection />;
+      default: return <OverviewSection />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 font-sans selection:bg-cyan-900">
-      <header className="bg-gray-800 border-b border-gray-700 p-6 sticky top-0 z-10 shadow-lg">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
+    <div className="min-h-screen bg-gray-900 text-gray-100 font-sans selection:bg-cyan-900 pb-12">
+      <header className="bg-gray-800 border-b border-gray-700 p-6 sticky top-0 z-20 shadow-lg">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <div>
             <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
               Composição Musical IV
             </h1>
             <p className="text-gray-400 text-sm mt-1">Modelos Tecnomórficos e a Escrita Instrumental Pós-Digital</p>
           </div>
-          <div className="mt-4 md:mt-0 px-4 py-2 bg-gray-900 rounded-full border border-gray-700 text-xs font-mono text-cyan-400">
-            Aula 00: O Compositor como Transdutor
+          <div className="mt-4 md:mt-0 flex items-center gap-3">
+             <div className="px-3 py-1 bg-cyan-900/30 rounded border border-cyan-700 text-xs font-mono text-cyan-400">
+              Aula 00
+            </div>
+            <div className="px-3 py-1 bg-purple-900/30 rounded border border-purple-700 text-xs font-mono text-purple-400">
+              Pós-Graduação
+            </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto p-6 flex flex-col md:flex-row gap-6">
+      <main className="max-w-7xl mx-auto p-4 md:p-6 flex flex-col lg:flex-row gap-6">
         {/* Navigation Sidebar */}
-        <nav className="w-full md:w-64 flex-shrink-0">
-          <div className="bg-gray-800 rounded-lg p-4 sticky top-32 border border-gray-700 shadow-xl">
-            <ul className="space-y-2">
-              <NavItem 
-                id="overview" 
-                label="Visão Geral & Analogia" 
-                icon={<Activity size={18} />} 
-                activeTab={activeTab} 
-                setActiveTab={setActiveTab} 
-              />
-              <NavItem 
-                id="modules" 
-                label="Arco do Curso" 
-                icon={<Layers size={18} />} 
-                activeTab={activeTab} 
-                setActiveTab={setActiveTab} 
-              />
-              <NavItem 
-                id="concepts" 
-                label="Conceitos Chave" 
-                icon={<Cpu size={18} />} 
-                activeTab={activeTab} 
-                setActiveTab={setActiveTab} 
-              />
-              <NavItem 
-                id="repertoire" 
-                label="Repertório & Escuta" 
-                icon={<Music size={18} />} 
-                activeTab={activeTab} 
-                setActiveTab={setActiveTab} 
-              />
-              <NavItem 
-                id="tools" 
-                label="Ferramentas & Diagnóstico" 
-                icon={<Terminal size={18} />} 
-                activeTab={activeTab} 
-                setActiveTab={setActiveTab} 
-              />
+        <nav className="w-full lg:w-64 flex-shrink-0 z-10">
+          <div className="bg-gray-800 rounded-lg p-2 md:p-4 lg:sticky lg:top-32 border border-gray-700 shadow-xl overflow-x-auto md:overflow-visible">
+            <ul className="flex lg:flex-col space-x-2 lg:space-x-0 lg:space-y-2 min-w-max lg:min-w-0">
+              <NavItem id="overview" label="Visão Geral" icon={<Activity size={18} />} activeTab={activeTab} setActiveTab={setActiveTab} />
+              <NavItem id="modules" label="Arco do Curso" icon={<Layers size={18} />} activeTab={activeTab} setActiveTab={setActiveTab} />
+              <NavItem id="concepts" label="Conceitos" icon={<Cpu size={18} />} activeTab={activeTab} setActiveTab={setActiveTab} />
+              <NavItem id="repertoire" label="Repertório & Player" icon={<Music size={18} />} activeTab={activeTab} setActiveTab={setActiveTab} highlight={true} />
+              <NavItem id="tools" label="Ferramentas" icon={<Terminal size={18} />} activeTab={activeTab} setActiveTab={setActiveTab} />
             </ul>
           </div>
         </nav>
 
         {/* Main Content Area */}
-        <div className="flex-grow">
-          <div className="bg-gray-800 rounded-lg border border-gray-700 p-8 shadow-xl min-h-[600px]">
+        <div className="flex-grow min-w-0">
+          <div className="bg-gray-800 rounded-lg border border-gray-700 p-4 md:p-8 shadow-xl min-h-[600px] relative">
             {renderContent()}
           </div>
         </div>
@@ -97,7 +66,322 @@ const CourseIntroApp = () => {
   );
 };
 
-// --- Components for Sections ---
+// --- REPERTOIRE SECTION WITH EMBEDDED PLAYER ---
+
+const RepertoireSection = () => {
+  const [filter, setFilter] = useState('all');
+  const [activeVideo, setActiveVideo] = useState(null);
+
+  // Helper to extract YouTube ID
+  const getYoutubeId = (url) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
+  const handlePlay = (work, link) => {
+    const videoId = getYoutubeId(link.url);
+    if (videoId) {
+      setActiveVideo({
+        ...work,
+        videoId: videoId,
+        url: link.url
+      });
+      // Scroll to top of player on mobile
+      window.scrollTo({ top: 100, behavior: 'smooth' });
+    } else {
+      window.open(link.url, '_blank');
+    }
+  };
+
+  const repertoireData = [
+    {
+      module: "Módulo 1: Espectralismo & Transdução",
+      color: "border-blue-500",
+      works: [
+        {
+          composer: "Gérard Grisey",
+          title: "Partiels",
+          year: "1975",
+          desc: "O nascimento do espectralismo. A orquestra 'transduz' o espectro de um Mi grave de trombone.",
+          links: [
+            { label: "Ouvir Obra (Ensemble Court-circuit)", url: "https://www.youtube.com/watch?v=1QLICwmOtjc" },
+            { label: "Análise Visual", url: "https://www.youtube.com/watch?v=2LAtJHFJuog" }
+          ]
+        },
+        {
+          composer: "Gérard Grisey",
+          title: "Vortex Temporum",
+          year: "1996",
+          desc: "Uso de arpejos para imitar ondas senoidais, quadradas e dente-de-serra.",
+          links: [
+            { label: "Performance BCMG", url: "https://www.youtube.com/watch?v=70xJ0Sdc2G8" },
+            { label: "Versão Ictus (Studio)", url: "https://www.youtube.com/watch?v=f_CkCypPFAQ" }
+          ]
+        },
+        {
+          composer: "Tristan Murail",
+          title: "Gondwana",
+          year: "1980",
+          desc: "Interpolação harmônica simulando síntese FM entre sino e trombone.",
+          links: [
+            { label: "Ouvir com Partitura", url: "https://www.youtube.com/watch?v=uaPVaPPDmVs" }
+          ]
+        }
+      ]
+    },
+    {
+      module: "Módulo 2: Granularidade & Textura",
+      color: "border-green-500",
+      works: [
+        {
+          composer: "Iannis Xenakis",
+          title: "Metastaseis",
+          year: "1954",
+          desc: "Glissandi massivos criando superfícies sonoras. Precursor da granularidade.",
+          links: [
+            { label: "Visualização Espectral", url: "https://www.youtube.com/watch?v=u81IGEFt7dM" },
+            { label: "Com Partitura", url: "https://www.youtube.com/watch?v=SZazYFchLRI" }
+          ]
+        },
+        {
+          composer: "Silvio Ferraz",
+          title: "Lamento Quase Mudo",
+          year: "Contemporâneo",
+          desc: "Violoncelo tratado como gerador de ruído e granulação.",
+          links: [
+            { label: "Performance (Safi Zerbinatti)", url: "https://www.youtube.com/watch?v=4gxmlRtXOiY" }
+          ]
+        },
+        {
+          composer: "Barry Truax",
+          title: "Riverrun",
+          year: "1986",
+          desc: "Obra seminal de síntese granular pura.",
+          links: [
+            { label: "Ouvir Obra", url: "https://www.youtube.com/watch?v=lP1mqsNEz-s" }
+          ]
+        }
+      ]
+    },
+    {
+      module: "Módulo 3: Tempo, Loop & Glitch",
+      color: "border-purple-500",
+      works: [
+        {
+          composer: "Bernhard Lang",
+          title: "Monadologie V",
+          year: "2009",
+          desc: "A estética do CD riscado aplicada ao piano acústico.",
+          links: [
+            { label: "Ouvir (Marino Formenti)", url: "https://www.youtube.com/watch?v=AJeuwpY3khw" }
+          ]
+        },
+        {
+          composer: "Stefan Prins",
+          title: "Piano Hero #1",
+          year: "2011",
+          desc: "O músico como avatar. Dissociação entre gesto físico e resultado sonoro.",
+          links: [
+            { label: "Performance (Zubin Kanga)", url: "https://www.youtube.com/watch?v=vB7mHSxlE3g" }
+          ]
+        },
+        {
+          composer: "Flo Menezes",
+          title: "Parcours de l'Entité",
+          year: "1994",
+          desc: "Maximalismo: densidade instrumental competindo com processamento digital.",
+          links: [
+            { label: "Excertos / Obra", url: "https://www.youtube.com/watch?v=3fizz1wIPko" } 
+          ]
+        }
+      ]
+    },
+    {
+      module: "Módulo 4: Percussão & Corpo",
+      color: "border-red-500",
+      works: [
+        {
+          composer: "Helmut Lachenmann",
+          title: "Pression",
+          year: "1969",
+          desc: "Musique concrète instrumentale. O corpo do instrumento como território.",
+          links: [
+            { label: "Performance (Lucas Fels)", url: "https://www.youtube.com/watch?v=aeF6W9M8aBo" }
+          ]
+        },
+        {
+          composer: "Cesar Traldi",
+          title: "Cambucá",
+          year: "2000s",
+          desc: "Percussão múltipla brasileira e tape. Interpretação mediada.",
+          links: [
+            { label: "Performance ao Vivo", url: "https://www.youtube.com/watch?v=aeF6W9M8aBo" }
+          ]
+        }
+      ]
+    },
+    {
+      module: "Popular, Eletrônica & Híbridos",
+      color: "border-yellow-500",
+      works: [
+        {
+          composer: "Aphex Twin",
+          title: "Glitch & Granular",
+          year: "Vários",
+          desc: "Uso pioneiro de síntese granular para criar percussão fragmentada.",
+          links: [
+            { label: "Tutorial: Estilo Aphex Twin", url: "https://www.youtube.com/watch?v=wSRi1q30og8" }
+          ]
+        },
+        {
+          composer: "Anitta / Prod. Gabriel do Borel",
+          title: "Funk Generation",
+          year: "2024",
+          desc: "Hibridização Funk Carioca + EDM. Tecnomorfismo cultural globalizado.",
+          links: [
+            { label: "Funk Rave (Video Oficial)", url: "https://www.youtube.com/watch?v=SXFn-m7c5vY" }
+          ]
+        },
+        {
+          composer: "SOPHIE",
+          title: "Sound Design",
+          year: "2015-2021",
+          desc: "Hyperpop: Distorção extrema usada como ferramenta de síntese tímbrica.",
+          links: [
+            { label: "Tutorial de Sound Design", url: "https://www.youtube.com/watch?v=jGc61a9fPGo" }
+          ]
+        },
+        {
+          composer: "Arca",
+          title: "Mutant",
+          year: "2015",
+          desc: "A falha e a granulação como estética de corpo queer/híbrido.",
+          links: [
+            { label: "Análise de Produção", url: "https://www.youtube.com/watch?v=fEzzZUUEvSk" }
+          ]
+        }
+      ]
+    }
+  ];
+
+  return (
+    <div className="flex flex-col lg:flex-row gap-6 animate-fadeIn h-full">
+      {/* List Column */}
+      <div className={`flex-1 space-y-6 transition-all duration-300 ${activeVideo ? 'lg:w-1/2' : 'w-full'}`}>
+        <div>
+          <h2 className="text-2xl font-bold text-cyan-400 mb-2">Repertório de Estudo</h2>
+          <p className="text-gray-400 text-sm mb-4">
+            Selecione uma obra para carregar o player.
+          </p>
+          
+          <div className="flex gap-2 overflow-x-auto pb-2 mb-4 scrollbar-hide">
+            {['all', 'Módulo 1', 'Módulo 2', 'Módulo 3', 'Popular'].map(f => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap transition-colors ${
+                  (filter === f || (f === 'all' && filter === 'all'))
+                   ? 'bg-cyan-600 text-white'
+                    : 'bg-gray-700 text-gray-400 hover:bg-gray-600'
+                }`}
+              >
+                {f === 'all' ? 'Todos' : f.replace('Módulo ', 'Mód ')}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-6 overflow-y-auto max-h-[800px] pr-2">
+          {repertoireData.map((section, idx) => {
+             if (filter !== 'all' && !section.module.includes(filter) && !(filter === 'Popular' && section.module.includes('Popular'))) return null;
+             
+             return (
+              <div key={idx} className={`border-l-2 ${section.color} pl-4`}>
+                <h3 className="text-lg font-bold text-gray-200 mb-3 flex items-center gap-2">
+                  {section.module}
+                </h3>
+                <div className="grid gap-3">
+                  {section.works.map((work, wIdx) => (
+                    <div 
+                      key={wIdx} 
+                      className={`group bg-gray-900/50 p-3 rounded border border-gray-700 hover:border-cyan-500/50 transition-all cursor-pointer ${activeVideo?.title === work.title ? 'border-cyan-500 bg-cyan-900/10' : ''}`}
+                    >
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-bold text-gray-100 text-sm">{work.title}</h4>
+                          <span className="text-xs text-cyan-400 font-medium">{work.composer}</span>
+                        </div>
+                        <span className="text-xs text-gray-500 bg-gray-800 px-2 py-0.5 rounded">{work.year}</span>
+                      </div>
+                      <p className="text-xs text-gray-400 mt-2 mb-3 line-clamp-2">{work.desc}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {work.links.map((link, lIdx) => (
+                          <button
+                            key={lIdx}
+                            onClick={(e) => { e.stopPropagation(); handlePlay(work, link); }}
+                            className="flex items-center gap-1.5 px-2 py-1.5 bg-gray-800 hover:bg-cyan-600 text-gray-300 hover:text-white rounded text-xs transition-colors"
+                          >
+                            <Play size={10} className="fill-current" />
+                            {link.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Player Column (Sticky or Modal-like) */}
+      <div className={`lg:w-1/2 transition-all duration-500 ${activeVideo ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10 hidden lg:block lg:w-0'}`}>
+        <div className="sticky top-6 bg-black/40 rounded-xl overflow-hidden border border-gray-600 shadow-2xl backdrop-blur-sm">
+          {activeVideo ? (
+            <>
+              <div className="bg-gray-800 p-3 flex justify-between items-center border-b border-gray-700">
+                <div className="flex items-center gap-2">
+                   <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                   <span className="text-sm font-bold text-gray-100 truncate max-w-[200px]">{activeVideo.title}</span>
+                </div>
+                <button onClick={() => setActiveVideo(null)} className="text-gray-400 hover:text-white">
+                  <X size={18} />
+                </button>
+              </div>
+              <div className="relative pt-[56.25%] bg-black">
+                <iframe
+                  src={`https://www.youtube.com/embed/${activeVideo.videoId}?autoplay=1`}
+                  className="absolute top-0 left-0 w-full h-full"
+                  title={activeVideo.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <div className="p-4">
+                <h3 className="font-bold text-lg text-cyan-400">{activeVideo.composer}: {activeVideo.title}</h3>
+                <p className="text-sm text-gray-300 mt-2">{activeVideo.desc}</p>
+                <div className="mt-4 p-3 bg-gray-700/30 rounded text-xs text-gray-400 flex gap-2">
+                  <Info size={14} className="flex-shrink-0 mt-0.5" />
+                  <p>Observe como o compositor traduz conceitos tecnológicos para a escrita instrumental. Tente identificar momentos de "transdução" auditiva.</p>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="h-64 flex flex-col items-center justify-center text-gray-500 p-8 text-center border-2 border-dashed border-gray-700 rounded-xl m-4">
+              <Youtube size={48} className="mb-4 opacity-50" />
+              <p>Selecione um vídeo na lista para assistir aqui.</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- OTHER SECTIONS (KEPT COMPACT) ---
 
 const OverviewSection = () => (
   <div className="space-y-8 animate-fadeIn">
@@ -134,9 +418,6 @@ const OverviewSection = () => (
           </p>
         </div>
       </div>
-      <p className="mt-4 text-gray-400 text-sm">
-        Neste curso, aprenderemos a construir esse espelho e a moldar o som instrumental através dele.
-      </p>
     </div>
   </div>
 );
@@ -147,73 +428,43 @@ const ModulesSection = ({ expandedModule, toggleModule }) => {
       weeks: "Semanas 1-3",
       title: "O Alicerce Filosófico",
       subtitle: "Simondon, Transdução e Tipomorfologia",
-      content: (
-        <ul className="list-disc pl-5 space-y-2">
-          <li>Transdução como conversão de energia (vs. representação).</li>
-          <li>Tipomorfologia de Pierre Schaeffer (massa, grão, allure).</li>
-          <li>Escuta reduzida como ferramenta analítica.</li>
-        </ul>
-      )
+      content: "Transdução como conversão de energia. Tipomorfologia de Pierre Schaeffer (massa, grão, allure). Escuta reduzida como ferramenta analítica."
     },
     {
       weeks: "Semanas 4-6",
       title: "A Microcirurgia do Timbre",
       subtitle: "Espectralismo e Síntese Instrumental",
-      content: (
-        <ul className="list-disc pl-5 space-y-2">
-          <li>Análise de espectro (FFT) e orquestração de parciais.</li>
-          <li>Síntese Aditiva Instrumental (Grisey, Murail).</li>
-          <li>Síntese Subtrativa e escultura de ruído.</li>
-        </ul>
-      )
+      content: "Análise de espectro (FFT) e orquestração de parciais. Síntese Aditiva Instrumental (Grisey, Murail). Síntese Subtrativa e escultura de ruído."
     },
     {
       weeks: "Semanas 7-9",
       title: "O Tempo Pós-Digital",
       subtitle: "Granulação, Loop e Glitch",
-      content: (
-        <ul className="list-disc pl-5 space-y-2">
-          <li>Síntese Granular e Concatenativa (CSS) como modelos de escrita.</li>
-          <li>A estética do Loop (repetição mecânica) e do Glitch (erro digital).</li>
-          <li>Xenakis, Truax e compositores brasileiros contemporâneos.</li>
-        </ul>
-      )
+      content: "Síntese Granular e Concatenativa (CSS) como modelos de escrita. A estética do Loop (repetição mecânica) e do Glitch (erro digital)."
     },
     {
       weeks: "Semanas 10-12",
       title: "O Corpo e a Máquina",
       subtitle: "Percussão, Performance e Maximalismo",
-      content: (
-        <ul className="list-disc pl-5 space-y-2">
-          <li>Percussão como sintetizador de ruído branco.</li>
-          <li>O corpo como controlador/avatar (Stefan Prins).</li>
-          <li>Maximalismo e densidade (Flo Menezes).</li>
-        </ul>
-      )
+      content: "Percussão como sintetizador de ruído branco. O corpo como controlador/avatar (Stefan Prins). Maximalismo e densidade (Flo Menezes)."
     },
     {
       weeks: "Semanas 13-15",
       title: "As Novas Fronteiras",
       subtitle: "Biomoformismo e Improvisação",
-      content: (
-        <ul className="list-disc pl-5 space-y-2">
-          <li>Biomoformismo: tecnologia modelando a natureza.</li>
-          <li>Crítica ao especismo e ecologia sonora.</li>
-          <li>Improvisação livre mediada por escuta de máquina.</li>
-        </ul>
-      )
+      content: "Biomoformismo: tecnologia modelando a natureza. Crítica ao especismo e ecologia sonora. Improvisação livre mediada por escuta de máquina."
     }
   ];
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-cyan-400 mb-6">O Arco do Curso</h2>
+      <h2 className="text-2xl font-bold text-cyan-400 mb-6">Arco do Curso</h2>
       <div className="relative border-l-2 border-gray-700 ml-3 space-y-6">
         {modules.map((mod, idx) => (
           <div key={idx} className="ml-6 relative">
-            <div className={`absolute -left-[31px] top-0 w-4 h-4 rounded-full border-2 ${expandedModule === idx? 'bg-cyan-500 border-cyan-500' : 'bg-gray-900 border-gray-600'} transition-colors duration-300`}></div>
+            <div className={`absolute -left-[31px] top-0 w-4 h-4 rounded-full border-2 ${expandedModule === idx ? 'bg-cyan-500 border-cyan-500' : 'bg-gray-900 border-gray-600'} transition-colors duration-300`}></div>
             <div 
-              className={`bg-gray-700/40 rounded-lg border ${expandedModule === idx? 'border-cyan-600 bg-gray-700/60' : 'border-gray-700'} overflow-hidden cursor-pointer transition-all duration-300 hover:border-gray-500`}
+              className={`bg-gray-700/40 rounded-lg border ${expandedModule === idx ? 'border-cyan-600 bg-gray-700/60' : 'border-gray-700'} overflow-hidden cursor-pointer transition-all duration-300 hover:border-gray-500`}
               onClick={() => toggleModule(idx)}
             >
               <div className="p-4 flex justify-between items-center">
@@ -222,12 +473,12 @@ const ModulesSection = ({ expandedModule, toggleModule }) => {
                   <h3 className="font-bold text-lg text-gray-100">{mod.title}</h3>
                   <p className="text-sm text-gray-400">{mod.subtitle}</p>
                 </div>
-                {expandedModule === idx? <ChevronUp className="text-cyan-400" /> : <ChevronDown className="text-gray-500" />}
+                {expandedModule === idx ? <ChevronUp className="text-cyan-400" /> : <ChevronDown className="text-gray-500" />}
               </div>
               
               {expandedModule === idx && (
                 <div className="px-4 pb-4 pt-0 text-gray-300 text-sm border-t border-gray-600/50 mt-2 pt-3 animate-fadeIn">
-                  {mod.content}
+                  <p>{mod.content}</p>
                 </div>
               )}
             </div>
@@ -241,28 +492,11 @@ const ModulesSection = ({ expandedModule, toggleModule }) => {
 const ConceptsSection = () => (
   <div className="space-y-6">
     <h2 className="text-2xl font-bold text-cyan-400 mb-4">Conceitos Fundamentais</h2>
-    
-    <div className="grid gap-4">
-      <ConceptCard 
-        title="Tecnomorfismo" 
-        def="Do grego techne (arte/ofício) + morphe (forma)."
-        desc="A utilização metafórica ou simulativa de processos tecnológicos em meios diversos (neste caso, instrumentos acústicos). Não é usar tecnologia, é pensar como ela."
-      />
-      <ConceptCard 
-        title="Transdução (Simondon)" 
-        def="Operação física/filosófica."
-        desc="A passagem de informação entre domínios heterogêneos. O compositor age como uma 'turbina' que converte a lógica digital (água) em som instrumental (eletricidade)."
-      />
-      <ConceptCard 
-        title="Escuta Reduzida (Schaeffer)" 
-        def="Fenomenologia do som."
-        desc="Ouvir o som por sua morfologia (massa, grão, allure) e não por sua causa ou significado. Essencial para analisar texturas complexas."
-      />
-      <ConceptCard 
-        title="Simulativo vs. Metafórico" 
-        def="Categorias de Holmes/Catanzaro."
-        desc="Simulativo: Imitar a superfície sonora (ex: overpressure = ruído branco). Metafórico: Imitar a lógica estrutural (ex: corte abrupto na forma = edição de fita)."
-      />
+    <div className="grid md:grid-cols-2 gap-4">
+      <ConceptCard title="Tecnomorfismo" def="Techne + Morphe" desc="Uso metafórico de processos tecnológicos em meios acústicos." />
+      <ConceptCard title="Transdução" def="Simondon" desc="Passagem de informação entre domínios heterogêneos (digital -> acústico)." />
+      <ConceptCard title="Escuta Reduzida" def="Schaeffer" desc="Ouvir a morfologia (massa, grão) ignorando a causa do som." />
+      <ConceptCard title="Simulativo vs Metafórico" def="Holmes/Catanzaro" desc="Imitar o som (simulativo) vs Imitar a lógica (metafórico)." />
     </div>
   </div>
 );
@@ -275,336 +509,41 @@ const ConceptCard = ({ title, def, desc }) => (
   </div>
 );
 
-// --- SEÇÃO REPERTÓRIO ATUALIZADA ---
-
-const RepertoireSection = () => {
-  const [filter, setFilter] = useState('all');
-
-  const repertoireData = [
-    {
-      module: "Módulo 1: Paradigma Espectral",
-      works: [
-        {
-          composer: "Gérard Grisey",
-          title: "Partiels",
-          year: "1975",
-          desc: "Análise do espectro do trombone orquestrado como paradigma da síntese aditiva.",
-          links: [
-            { label: "Ensemble Court-circuit", url: "https://www.youtube.com/watch?v=1QLICwmOtjc" },
-            { label: "Discussão sobre Partiels", url: "https://www.youtube.com/watch?v=2LAtJHFJuog" }
-          ]
-        },
-        {
-          composer: "Gérard Grisey",
-          title: "Vortex Temporum",
-          year: "1996",
-          desc: "Mimese de formas de onda (senoidal, quadrada, dente de serra) através de arpejos e texturas.",
-          links: [
-            { label: "BCMG NEXT Musicians", url: "https://www.youtube.com/watch?v=70xJ0Sdc2G8" },
-            { label: "Versão Studio - Ictus", url: "https://www.youtube.com/watch?v=f_CkCypPFAQ" },
-            { label: "Com Partitura - Ryan Power", url: "https://music.ictus.be/album/grisey-vortex-temporum-1" }
-          ]
-        },
-        {
-          composer: "Karlheinz Stockhausen",
-          title: "Gruppen",
-          year: "1955-57",
-          desc: "Espacialização para três orquestras, exemplificando difusão espacial conceitual.",
-          links: [
-            { label: "Performance Histórica", url: "https://www.youtube.com/watch?v=34_SfP7ZCXA" },
-            { label: "Ensemble Intercontemporain", url: "https://www.youtube.com/watch?v=87-6mahJMgw" },
-            { label: "Análise Detalhada", url: "https://stockhausenspace.blogspot.com/2014/12/opus-6-gruppen.html" }
-          ]
-        },
-        {
-          composer: "Rodolfo Coelho de Souza",
-          title: "Estação Paraíso",
-          year: "-",
-          desc: "Abstração sonora e representação usando modelos computacionais para estruturar discurso harmônico.",
-          links: [
-            { label: "Análise Acadêmica", url: "https://revistas.ufg.br/musica/article/view/20153/12610" }
-          ]
-        }
-      ]
-    },
-    {
-      module: "Módulo 2: Granularidade e Textura",
-      works: [
-        {
-          composer: "Iannis Xenakis",
-          title: "Metastaseis",
-          year: "1953-54",
-          desc: "Precursor estocástico da granularidade, com glissandi massivos criando massas sonoras.",
-          links: [
-            { label: "Score Video - Boosey & Hawkes", url: "https://www.youtube.com/watch?v=SZazYFchLRI" },
-            { label: "Spectral View", url: "https://www.youtube.com/watch?v=u81IGEFt7dM" }
-          ]
-        },
-        {
-          composer: "Barry Truax",
-          title: "Riverrun",
-          year: "1986",
-          desc: "Obra acusmática paradigmática usando síntese granular em tempo real.",
-          links: [
-            { label: "Performance com Análise", url: "https://www.youtube.com/watch?v=lP1mqsNEz-s" },
-            { label: "Artigo Técnico", url: "https://econtact.ca/11_2/bouchard_truax.html" }
-          ]
-        },
-        {
-          composer: "Silvio Ferraz",
-          title: "Lamento Quase Mudo",
-          year: "-",
-          desc: "'Devir-percussão' do violoncelo com técnicas estendidas para texturas granulares.",
-          links: [
-            { label: "Safi Camila Zerbinatti", url: "https://www.youtube.com/watch?v=4gxmlRtXOiY" },
-            { label: "Dimos Goudaroulis", url: "https://www.youtube.com/watch?v=1ocF39KveKU" },
-            { label: "Análise de Técnicas", url: "https://www.youtube.com/watch?v=y4lE18DG1ww" }
-          ]
-        }
-      ]
-    },
-    {
-      module: "Módulo 3: Tecnomorfismo do Tempo",
-      works: [
-        {
-          composer: "Bernhard Lang",
-          title: "Monadologie V",
-          year: "2008/09",
-          desc: "Piano solo explorando estética do loop.",
-          links: [
-            { label: "Marino Formenti", url: "https://www.youtube.com/watch?v=AJeuwpY3khw" }
-          ]
-        },
-        {
-          composer: "Stefan Prins",
-          title: "Piano Hero #1",
-          year: "2011",
-          desc: "Teclado MIDI, piano de cauda, vídeo e eletrônica - dissociação corpo virtual.",
-          links: [
-            { label: "Hyun-Mook Lim", url: "https://www.youtube.com/watch?v=gVs_7YfLnKk" },
-            { label: "Zubin Kanga", url: "https://www.youtube.com/watch?v=vB7mHSxlE3g" }
-          ]
-        },
-        {
-          composer: "Flo Menezes",
-          title: "Parcours de l'Entité",
-          year: "1994",
-          desc: "Maximalismo com delays estruturais e processos de transformação em tempo real.",
-          links: [
-            { label: "Performance", url: "https://www.youtube.com/watch?v=3fizz1wIPko" }, // Link genérico placeholder, verificar específico se houver
-            { label: "Canal Oficial Flo Menezes", url: "https://www.youtube.com/@flomenezes1634/videos" }
-          ]
-        }
-      ]
-    },
-    {
-      module: "Módulo 4: Percussão e Performance",
-      works: [
-        {
-          composer: "Helmut Lachenmann",
-          title: "Pression",
-          year: "1969",
-          desc: "Violoncelo solo como 'musique concrète instrumentale'.",
-          links: [
-            { label: "Introdução à Obra (LSO)", url: "https://www.lso.co.uk/an-introduction-to-helmut-lachenmann/" }
-          ]
-        },
-        {
-          composer: "Cesar Traldi",
-          title: "Cambucá",
-          year: "-",
-          desc: "Set de percussão múltipla brasileira com tape, exemplificando interpretação mediada.",
-          links: [
-            { label: "Performance", url: "https://www.youtube.com/watch?v=aeF6W9M8aBo" }
-          ]
-        },
-        {
-          composer: "Fernando Iazzetta",
-          title: "Corda e Cabaça",
-          year: "1999",
-          desc: "Obra para 6 canais usando berimbau como material sonoro, explorando sons de silício e corporeidade.",
-          links: [
-            { label: "Bandcamp LAMI", url: "https://lami-usp.bandcamp.com/album/fernando-iazzetta-m-sica-eletroac-stica-brasileira" }
-          ]
-        }
-      ]
-    },
-    {
-      module: "Música Popular e Eletrônica",
-      works: [
-        {
-          composer: "Aphex Twin",
-          title: "Selected Ambient Works 85-92",
-          year: "1992",
-          desc: "Síntese granular simulativa para criar texturas glitchy e percussão fragmentada.",
-          links: [
-            { label: "Tutorial: Glitchy Drums", url: "https://www.youtube.com/watch?v=wSRi1q30og8" }
-          ]
-        },
-        {
-          composer: "Autechre",
-          title: "Tri Repetae",
-          year: "1995",
-          desc: "Algoritmos customizados (Max/MSP) e loop aesthetics complexa.",
-          links: [
-            { label: "Álbum Completo", url: "https://www.youtube.com/watch?v=8kfttVN6k3g" }
-          ]
-        },
-        {
-          composer: "Arca",
-          title: "Mutant",
-          year: "2015",
-          desc: "Re-síntese granular extrema e distorção massiva como síntese.",
-          links: [
-            { label: "Analysis: Arca's Production", url: "https://www.youtube.com/watch?v=fEzzZUUEvSk" }
-          ]
-        },
-        {
-          composer: "SOPHIE",
-          title: "Oil of Every Pearl's Un-Insides",
-          year: "2018",
-          desc: "Distorção extrema como síntese e sound design 'hyperpop'.",
-          links: [
-            { label: "Sound Design Tutorial", url: "https://www.youtube.com/watch?v=jGc61a9fPGo" }
-          ]
-        },
-        {
-          composer: "Anitta",
-          title: "Funk Generation",
-          year: "2024",
-          desc: "Hibridização Funk + EDM, produção globalizada com elementos de glitch e síntese.",
-          links: [
-            { label: "Funk Rave (Official Video)", url: "https://www.youtube.com/watch?v=SXFn-m7c5vY" }
-          ]
-        }
-      ]
-    }
-  ];
-
-  return (
-    <div className="space-y-8 animate-fadeIn">
-      <div>
-        <h2 className="text-2xl font-bold text-cyan-400 mb-4 border-b border-gray-700 pb-2">Guia de Repertório Tecnomórfico</h2>
-        <p className="text-gray-300 mb-6">
-          Uma seleção abrangente de obras que exemplificam os conceitos de tecnomorfismo, desde o espectralismo canônico até o hyperpop e a música brasileira contemporânea.
-        </p>
-        
-        {/* Filtros Simples (opcional, pode ser expandido) */}
-        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
-          {['all', 'Módulo 1', 'Módulo 2', 'Módulo 3', 'Módulo 4', 'Popular'].map(f => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-colors ${
-                (filter === f || (f === 'all' && filter === 'all'))
-                 ? 'bg-cyan-600 text-white'
-                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
-              }`}
-            >
-              {f === 'all' ? 'Todos' : f}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="space-y-8">
-        {repertoireData.map((section, idx) => {
-          // Lógica simples de filtro
-          if (filter !== 'all' && !section.module.includes(filter) && !(filter === 'Popular' && section.module.includes('Popular'))) return null;
-
-          return (
-            <div key={idx} className="space-y-4">
-              <h3 className="text-xl font-semibold text-blue-300 flex items-center gap-2">
-                <Disc size={20} /> {section.module}
-              </h3>
-              <div className="grid md:grid-cols-2 gap-4">
-                {section.works.map((work, wIdx) => (
-                  <WorkCard key={wIdx} work={work} />
-                ))}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-};
-
-const WorkCard = ({ work }) => (
-  <div className="bg-gray-800/50 rounded-lg border border-gray-700 hover:border-cyan-600/50 transition-colors p-4 flex flex-col h-full">
-    <div className="mb-2">
-      <h4 className="font-bold text-lg text-gray-100">{work.title} <span className="text-sm font-normal text-gray-500">({work.year})</span></h4>
-      <p className="text-sm text-cyan-400 font-medium">{work.composer}</p>
-    </div>
-    <p className="text-sm text-gray-400 mb-4 flex-grow">{work.desc}</p>
-    
-    <div className="space-y-2 mt-auto">
-      {work.links.map((link, idx) => (
-        <a 
-          key={idx} 
-          href={link.url} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 text-xs font-medium text-gray-300 bg-gray-900/50 hover:bg-cyan-900/30 hover:text-cyan-300 px-3 py-2 rounded transition-all group"
-        >
-          {link.url.includes('youtube') ? <Play size={12} className="text-red-500" /> : <ExternalLink size={12} className="text-blue-400" />}
-          {link.label}
-          <ArrowRight size={12} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-        </a>
-      ))}
-    </div>
-  </div>
-);
-
 const ToolsSection = () => (
   <div className="space-y-8">
     <div>
-      <h2 className="text-2xl font-bold text-cyan-400 mb-4">Ferramentas Necessárias</h2>
+      <h2 className="text-2xl font-bold text-cyan-400 mb-4">Ferramentas & Diagnóstico</h2>
       <div className="grid md:grid-cols-2 gap-4">
         <div className="bg-gray-900 p-4 rounded border border-gray-700">
-          <h3 className="font-bold text-white mb-2">Sonic Visualiser / SPEAR</h3>
-          <p className="text-sm text-gray-400">Software para ver o som. Analisaremos espectrogramas para entender a morfologia interna (grão e massa).</p>
+          <h3 className="font-bold text-white mb-2 flex items-center gap-2"><Volume2 size={16}/> Sonic Visualiser</h3>
+          <p className="text-sm text-gray-400">Software essencial para análise espectromorfológica. Veremos o "grão" do som.</p>
         </div>
         <div className="bg-gray-900 p-4 rounded border border-gray-700">
-          <h3 className="font-bold text-white mb-2">Conceitos de DSP</h3>
-          <p className="text-sm text-gray-400">Não precisa programar, mas precisa entender o que é um Filtro Low-Pass, Envelope Follower ou Delay Line.</p>
+          <h3 className="font-bold text-white mb-2 flex items-center gap-2"><Terminal size={16}/> Conceitos DSP</h3>
+          <p className="text-sm text-gray-400">Entendimento lógico de Filtros, Delays e Envelopes (sem necessidade de codar).</p>
         </div>
       </div>
     </div>
-
     <div className="bg-gray-700/30 p-6 rounded-lg border border-gray-600">
-      <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-        <Terminal size={20} /> Diagnóstico da Turma
-      </h3>
-      <p className="text-gray-300 mb-4 text-sm">
-        Para calibrarmos o nível técnico do curso, reflitam sobre as seguintes questões:
-      </p>
+      <h3 className="text-xl font-bold text-white mb-4">Diagnóstico Inicial</h3>
       <ul className="space-y-3">
-        <li className="flex items-start gap-2">
-          <span className="bg-cyan-900 text-cyan-400 text-xs font-bold px-2 py-1 rounded">Q1</span>
-          <span className="text-sm text-gray-200">Alguém aqui já tentou transcrever um som eletrônico para o seu instrumento? Qual foi a maior dificuldade?</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="bg-cyan-900 text-cyan-400 text-xs font-bold px-2 py-1 rounded">Q2</span>
-          <span className="text-sm text-gray-200">Quais compositores brasileiros vocês associam imediatamente ao uso de tecnologia na escrita?</span>
-        </li>
-        <li className="flex items-start gap-2">
-          <span className="bg-cyan-900 text-cyan-400 text-xs font-bold px-2 py-1 rounded">Q3</span>
-          <span className="text-sm text-gray-200">Vocês têm familiaridade com leitura de espectrogramas?</span>
-        </li>
+        <li className="text-sm text-gray-200">1. Você já tentou transcrever um som eletrônico para seu instrumento?</li>
+        <li className="text-sm text-gray-200">2. Quais compositores brasileiros você associa à tecnologia?</li>
       </ul>
     </div>
   </div>
 );
 
-const NavItem = ({ id, label, icon, activeTab, setActiveTab }) => (
+const NavItem = ({ id, label, icon, activeTab, setActiveTab, highlight }) => (
   <li>
     <button
       onClick={() => setActiveTab(id)}
       className={`w-full flex items-center gap-3 px-4 py-3 rounded-md transition-all duration-200 ${
         activeTab === id 
          ? 'bg-cyan-600 text-white shadow-md' 
-          : 'text-gray-400 hover:bg-gray-700 hover:text-white'
+          : highlight 
+            ? 'bg-gray-700 text-cyan-300 hover:bg-gray-600 border border-cyan-900/50'
+            : 'text-gray-400 hover:bg-gray-700 hover:text-white'
       }`}
     >
       {icon}
